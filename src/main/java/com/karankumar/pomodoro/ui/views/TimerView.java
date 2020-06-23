@@ -16,6 +16,7 @@ import com.vaadin.flow.router.RouteAlias;
 public class TimerView extends VerticalLayout {
     private boolean isRunning = false;
 
+
     public TimerView() {
         setSizeFull();
         addClassName("timer");
