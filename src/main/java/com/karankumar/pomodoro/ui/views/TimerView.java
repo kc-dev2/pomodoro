@@ -1,5 +1,6 @@
 package com.karankumar.pomodoro.ui.views;
 
+import com.karankumar.pomodoro.CountdownTimer;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -42,11 +43,18 @@ public class TimerView extends VerticalLayout {
         state.setIcon(new Icon(VaadinIcon.PLAY)); // initial state
         state.setMinHeight("50px");
         state.setMinWidth("50px");
+
+        CountdownTimer countdownTimer = new CountdownTimer();
+        Thread thread = new Thread(countdownTimer);
+
         state.addClickListener(e -> {
             if (isRunning) {
                 state.setIcon(new Icon(VaadinIcon.PLAY));
+                thread.interrupt();
             } else {
+//                countdownTimer.run();
                 state.setIcon(new Icon(VaadinIcon.STOP));
+                thread.start();
             }
             isRunning = !isRunning;
         });
