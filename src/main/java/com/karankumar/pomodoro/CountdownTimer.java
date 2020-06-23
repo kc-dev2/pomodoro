@@ -15,6 +15,8 @@ public class CountdownTimer implements Runnable {
 
     private AtomicInteger timeRemaining;
 
+    private boolean pauseTimer;
+
     public CountdownTimer() {
         timerPreferences = new TimerPreferences();
     }
@@ -25,20 +27,27 @@ public class CountdownTimer implements Runnable {
 
         for(timeRemaining = new AtomicInteger(sessionLength); timeRemaining.get() > 0;
             timeRemaining.addAndGet(-MILLISECONDS_IN_SECOND)) {
+            if (pauseTimer) {
+                System.out.println("Stop timer");
+                Thread.currentThread().interrupt();
+            }
             try {
                 System.out.println("Time remaining: " + timeRemaining.get());
                 Thread.sleep(MILLISECONDS_IN_SECOND);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                System.out.println("Thread interrupted");
             }
         }
+        System.out.println("End of run()");
     }
 
     public void pauseTimer() {
-
+        System.out.println("Stop timer called");
+        pauseTimer = true;
     }
 
-    public void getTimeRemaining() {
-
+    public int getTimeRemaining() {
+        return timeRemaining.get();
     }
 }

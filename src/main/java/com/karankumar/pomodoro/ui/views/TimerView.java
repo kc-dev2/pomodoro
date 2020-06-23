@@ -50,9 +50,9 @@ public class TimerView extends VerticalLayout {
         state.addClickListener(e -> {
             if (isRunning) {
                 state.setIcon(new Icon(VaadinIcon.PLAY));
+                countdownTimer.pauseTimer();
                 thread.interrupt();
             } else {
-//                countdownTimer.run();
                 state.setIcon(new Icon(VaadinIcon.STOP));
                 thread.start();
             }
