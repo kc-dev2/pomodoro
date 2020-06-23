@@ -66,7 +66,7 @@ Please adhere to [our Java style guide](https://github.com/knjk04/pomodoro/blob/
 
 - Code: adding new features, fixing bugs and general refactoring to name a few
 
-- Documentation: improvements to files such as the [README](https://github.com/knjk04/pomodoro/blob/master/README.md), any of the [wiki]() pages, the [style guide](), comments in source files, this contributing document or the [code of conduct](https://github.com/knjk04/pomodoro/blob/master/CODE_OF_CONDUCT.md).
+- Documentation: improvements to files such as the [README](https://github.com/knjk04/pomodoro/blob/master/README.md), any of the [wiki](https://github.com/knjk04/pomodoro/wiki) pages, the [style guide](), comments in source files, this contributing document or the [code of conduct](https://github.com/knjk04/pomodoro/blob/master/CODE_OF_CONDUCT.md).
 
 - Design: helping to design the UI and UX of the web app through prototypes (such as wireframes and drawings)
 
