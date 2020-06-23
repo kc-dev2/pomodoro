@@ -60,7 +60,7 @@ This makes it easier to keep track of what changes were made in what branch or p
 
 ## Code contributions
 
-Please adhere to [our Java style guide]().
+Please adhere to [our Java style guide](https://github.com/knjk04/pomodoro/blob/master/STYLEGUIDE.md).
 
 ## Ways to contribute
 
