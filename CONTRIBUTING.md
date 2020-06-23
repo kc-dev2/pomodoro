@@ -2,7 +2,7 @@
 
 *Notes:*
 
-*1) Multiple versions of this document may exist, so please always refer to the [version on the master branch]().*
+*1) Multiple versions of this document may exist, so please always refer to the [version on the master branch](https://github.com/knjk04/pomodoro/blob/master/CONTRIBUTING.md).*
 
 *2) Please also ensure that you remain familiar with this contributing document as it may change from time to time.*
 
