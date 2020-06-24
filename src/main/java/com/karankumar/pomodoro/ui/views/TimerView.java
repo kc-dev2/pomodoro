@@ -1,6 +1,5 @@
 package com.karankumar.pomodoro.ui.views;
 
-import com.karankumar.pomodoro.CountdownTimer;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -14,17 +13,18 @@ import com.vaadin.flow.router.RouteAlias;
 @Route(value = "timer", layout = MainView.class)
 @RouteAlias(value = "", layout = MainView.class)
 @PageTitle("Timer")
-public class TimerView extends VerticalLayout implements Runnable {
+//public class TimerView extends VerticalLayout implements Runnable {
+public class TimerView extends VerticalLayout {
     private volatile boolean isRunning = false;
-    private Span timer;
-    private CountdownTimer countdownTimer;
+    private final TimerUI timerUI;
 
     public TimerView() {
         setSizeFull();
         addClassName("timer");
         setAlignItems(Alignment.CENTER);
 
-        Span timer = createTimer();
+        timerUI = new TimerUI();
+        Span timer = timerUI.createTimer();
         HorizontalLayout horizontalLayout = new HorizontalLayout(timer);
         horizontalLayout.setSizeFull();
         horizontalLayout.setAlignItems(Alignment.CENTER);
@@ -45,43 +45,17 @@ public class TimerView extends VerticalLayout implements Runnable {
         state.setMinHeight("50px");
         state.setMinWidth("50px");
 
-        countdownTimer = new CountdownTimer();
-        Thread thread = new Thread(countdownTimer);
-
         state.addClickListener(e -> {
             if (isRunning) {
                 state.setIcon(new Icon(VaadinIcon.PLAY));
-                countdownTimer.pauseTimer();
-                thread.interrupt();
+                timerUI.pause();
             } else {
                 state.setIcon(new Icon(VaadinIcon.PAUSE));
-                thread.start();
+				timerUI.runTimer();
+				timerUI.run();
             }
             isRunning = !isRunning;
         });
         return state;
-    }
-
-    private Span createTimer() {
-        timer = new Span("00:00");
-        timer.getElement().getStyle().set("color", "white");
-        timer.getElement().getStyle().set("font-size", "70px");
-        return timer;
-    }
-
-    private void updateTimer() {
-        Thread uiThread = new Thread(this);
-        uiThread.start();
-        while (isRunning) {
-            ; // don't exit method yet
-        }
-        Thread.currentThread().interrupt();
-    }
-
-    @Override
-    public void run() {
-        if (countdownTimer != null) {
-            timer.setText("" + countdownTimer.getTimeRemaining());
-        }
     }
 }
