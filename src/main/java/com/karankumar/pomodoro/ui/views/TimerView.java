@@ -1,5 +1,9 @@
 package com.karankumar.pomodoro.ui.views;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import com.karankumar.pomodoro.CountdownTimer;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
@@ -16,14 +20,15 @@ import com.vaadin.flow.router.RouteAlias;
 @PageTitle("Timer")
 public class TimerView extends VerticalLayout {
     private boolean isRunning = false;
-
+    private Span timer;		// make instance variable to set time within createStateButton() method
+    private CountdownTimer countdownTimer = new CountdownTimer();
 
     public TimerView() {
         setSizeFull();
         addClassName("timer");
         setAlignItems(Alignment.CENTER);
 
-        Span timer = createTimer();
+        this.timer = new Span("25:00");
         HorizontalLayout horizontalLayout = new HorizontalLayout(timer);
         horizontalLayout.setSizeFull();
         horizontalLayout.setAlignItems(Alignment.CENTER);
@@ -44,17 +49,25 @@ public class TimerView extends VerticalLayout {
         state.setMinHeight("50px");
         state.setMinWidth("50px");
 
-        CountdownTimer countdownTimer = new CountdownTimer();
-        Thread thread = new Thread(countdownTimer);
+//        CountdownTimer countdownTimer = new CountdownTimer();
+//        ExecutorService e1 = Executors.newFixedThreadPool(1);
+//        Future<Integer> timerCount = e1.submit(this.countdownTimer);
+//        Thread thread = new Thread(countdownTimer);
 
         state.addClickListener(e -> {
             if (isRunning) {
                 state.setIcon(new Icon(VaadinIcon.PLAY));
                 countdownTimer.pauseTimer();
-                thread.interrupt();
+                System.out.println("thread interrupt timerview");
+//                timerCount.interrupt();
             } else {
                 state.setIcon(new Icon(VaadinIcon.STOP));
-                thread.start();
+//                for(int i = 10; i > 0; i--) {
+//                	updateTimer();
+//                updateTimerNoThread();
+                updateTimer();
+//                timerCount.start();
+//                timer.setText("something needs to go here");
             }
             isRunning = !isRunning;
         });
@@ -62,9 +75,39 @@ public class TimerView extends VerticalLayout {
     }
 
     private Span createTimer() {
-        Span timer = new Span("00:00");
+        Span timer = new Span("10:00");
         timer.getElement().getStyle().set("color", "white");
         timer.getElement().getStyle().set("font-size", "70px");
+        timer.getElement().setText("asdrfsdf");
         return timer;
     }
+    
+    private void updateTimer() {
+    	ExecutorService e1 = Executors.newFixedThreadPool(1);
+    	for(int i = 10; i > 0; i--) {
+    		try {
+    			System.out.println("loop");
+    			Future<Integer> timerCount = e1.submit(this.countdownTimer);
+    			String timerText = String.valueOf(timerCount.get());
+    			System.out.println(timerText);
+//        			this.timer.getElement().setText(timerText);
+    		} catch (Exception e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
+    private void updateTimerNoThread()  {
+    		try {
+    			for(int j = 10; j > 0; j--) {
+    	    		String foo = String.valueOf(j);
+    	    		this.timer.setText(foo);
+    	    		Thread.sleep(1000);
+    			}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
 }
