@@ -4,7 +4,7 @@ package com.karankumar.pomodoro.preferences;
  * @author karan on 23/06/2020
  */
 public class TimerPreferences {
-    private int sessionDurationMinutes = 25;
+    private int sessionDurationMinutes = 1;
 
     private int shortBreakDuration = 5;
     private int longBreakDuration = 15;
